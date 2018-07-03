@@ -1,21 +1,29 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
-import About from "./views/About.vue";
+import Chat from "@/views/Chat";
+import Channel from "@/components/chat/Channel";
 
 Vue.use(Router);
 
 export default new Router({
+  mode: "history",
+  linkActiveClass: "active",
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: About
+      name: "Chat",
+      component: Chat,
+      redirect: {
+        path: "/channel/global"
+      },
+      children: [
+        {
+          path: "/channel/:uuid",
+          name: "Channel",
+          props: true,
+          component: Channel
+        }
+      ]
     }
   ]
 });
